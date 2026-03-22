@@ -1,4 +1,4 @@
-import { Target, Shield, Lightbulb, Users, ChartColumn } from 'lucide-react';
+import { Target, Shield, Lightbulb, Users,  } from 'lucide-react';
 import charlophoto from '../assets/Loire charlo.jpeg';
 import dianaphoto from '../assets/Loire Diana.jpeg';
 import hesbonPhoto from '../assets/Loire Hesbon.jpeg';
