@@ -70,9 +70,23 @@ const services = [
 ];
 
 export default function Services() {
+  
+  // 1. DEFINING THE SCROLL FUNCTION AT THE TOP
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
   return (
     <section id="services" className="min-h-screen bg-black text-white py-20">
       <div className="max-w-7xl mx-auto px-6">
+        
+        {/* Header Section */}
         <div className="text-center mb-16">
           <div className="inline-block px-4 py-1 bg-amber-500/10 border border-amber-500/20 rounded-full text-amber-500 text-sm font-medium mb-4">
             Services & Solutions
@@ -85,6 +99,7 @@ export default function Services() {
           </p>
         </div>
 
+        {/* Services Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => {
             const Icon = service.icon;
@@ -118,6 +133,7 @@ export default function Services() {
           })}
         </div>
 
+        {/* Consultation CTA Block */}
         <div className="mt-16 bg-gradient-to-r from-amber-500/10 to-transparent border border-amber-500/20 rounded-sm p-8 md:p-12">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
@@ -125,10 +141,17 @@ export default function Services() {
               <p className="text-gray-400 mb-6">
                 Book a free 15-minute consultation to discuss your project goals and discover which services align with your vision.
               </p>
-              <button className="px-8 py-4 bg-amber-500 text-black font-semibold rounded-sm hover:bg-amber-400 transition-colors">
+              
+              {/* 2. THE UPDATED BUTTON WITH ONCLICK */}
+              <button
+                onClick={() => scrollToSection('contact')}
+                className="px-8 py-4 bg-amber-500 text-black font-semibold rounded-sm hover:bg-amber-400 active:scale-95 transition-all shadow-lg shadow-amber-500/10"
+              >
                 Schedule Free Consultation
               </button>
             </div>
+            
+            {/* Timeline & Stats Side */}
             <div className="hidden md:block">
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-black/50 border border-gray-800 rounded-sm p-6">

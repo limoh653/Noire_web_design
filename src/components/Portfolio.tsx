@@ -2,16 +2,17 @@ import { ExternalLink, TrendingUp, Zap, Users } from 'lucide-react';
 
 const projects = [
   {
-    title: "FinanceFlow Pro",
-    category: "Financial SaaS Platform",
-    challenge: "Client needed a secure, real-time financial dashboard with complex data visualizations and multi-user access control.",
+    title: "Kemcare",
+    category: "Home care platform",
+    challenge: "Client needed a secure, real-time online booking dashboard with complex data visualizations and multi-user access control.",
     stack: ["React", "Django", "PostgreSQL", "Redis", "Chart.js"],
     results: [
       { icon: Zap, metric: "60%", label: "Faster Data Processing" },
       { icon: TrendingUp, metric: "85%", label: "User Retention Increase" },
       { icon: Users, metric: "10K+", label: "Active Users" }
     ],
-    image: "https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=800"
+    image: "https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=800",
+    link: "https://kemcare.onrender.com" 
   },
   {
     title: "AutomateHub",
@@ -23,18 +24,20 @@ const projects = [
       { icon: TrendingUp, metric: "92%", label: "Error Reduction" },
       { icon: Users, metric: "200+", label: "Automated Workflows" }
     ],
-    image: "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=800"
+    image: "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=800",
+    link: "#" // Add a link here when ready
   },
   {
-    title: "UrbanSpaces",
-    category: "Real Estate Marketplace",
-    challenge: "Property management company needed a modern listing platform with virtual tours and real-time booking.",
+    title: "Swiper Ventures",
+    category: "Real Estate Construction",
+    challenge: "Real estate company needed a modern online platform with its portfolio and real-time booking.",
     stack: ["Next.js", "Supabase", "Stripe", "Mapbox", "TypeScript"],
     results: [
       { icon: Zap, metric: "40%", label: "Load Time Reduction" },
       { icon: TrendingUp, metric: "3x", label: "Conversion Rate" },
       { icon: Users, metric: "5K+", label: "Monthly Visitors" }
     ],
+    link: "https://swiper-ventures.onrender.com/",
     image: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=800"
   }
 ];
@@ -112,10 +115,18 @@ export default function Portfolio() {
                     </div>
                   </div>
 
-                  <button className="mt-6 flex items-center gap-2 text-amber-500 hover:text-amber-400 transition-colors group/btn">
-                    View Case Study
-                    <ExternalLink size={16} className="group-hover/btn:translate-x-1 transition-transform" />
-                  </button>
+                  {/* UPDATED LINK SECTION */}
+                  {project.link && (
+                    <a 
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-8 inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 transition-colors group/btn font-semibold"
+                    >
+                      View Case Study
+                      <ExternalLink size={16} className="group-hover/btn:translate-x-1 transition-transform" />
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
