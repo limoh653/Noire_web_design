@@ -1,5 +1,6 @@
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import logo from '../assets/Loire logo.jpeg';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,10 +17,26 @@ export default function Navigation() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-gray-800">
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <div className="text-2xl font-bold tracking-tight text-white">
-            Noire<span className="text-amber-500">. Web Design</span>
+          
+          {/* 2. LOGO CONTAINER */}
+          {/* We use 'flex' and 'gap-3' to align the image and text nicely */}
+          <div className="flex items-center gap-3 text-2xl font-bold tracking-tight text-white cursor-pointer" onClick={() => scrollToSection('home')}>
+            
+            {/* 3. THE CIRCULAR IMAGE */}
+            <img 
+              src={logo} 
+              alt="Noire Web Design Logo" 
+              // These are the key classes:
+              className="w-12 h-12 rounded-full object-cover border border-amber-500/20 shadow-lg" 
+            />
+            
+            {/* Keeping the text name next to the logo is a common practice */}
+            <span>
+              Noire<span className="text-amber-500">. Web Design</span>
+            </span>
           </div>
 
+          {/* Rest of your navigation code... */}
           <div className="hidden md:flex items-center space-x-8">
             <button onClick={() => scrollToSection('home')} className="text-gray-300 hover:text-white transition-colors">
               Home

@@ -1,23 +1,26 @@
-import { Target, Shield, Lightbulb, Users } from 'lucide-react';
+import { Target, Shield, Lightbulb, Users, ChartColumn } from 'lucide-react';
+import charlophoto from '../assets/Loire charlo.jpeg';
+import dianaphoto from '../assets/Loire Diana.jpeg';
+import hesbonPhoto from '../assets/Loire Hesbon.jpeg';
 
 const team = [
   {
-    name: "Alex Morrison",
+    name: "Hesbon Limo",
     role: "Founder & Lead Developer",
     bio: "Software Engineer with 8+ years building scalable web applications. Specialized in full-stack development and system architecture.",
-    image: "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=400"
+    image: hesbonPhoto,
   },
   {
-    name: "Jordan Blake",
+    name: "Diana Chemutai",
     role: "UI/UX Designer",
     bio: "Certified UX Designer passionate about creating intuitive interfaces. Background in cognitive psychology and accessibility design.",
-    image: "https://images.pexels.com/photos/3748221/pexels-photo-3748221.jpeg?auto=compress&cs=tinysrgb&w=400"
+    image: dianaphoto,
   },
   {
-    name: "Casey Rivera",
+    name: "Charles Rotich",
     role: "DevOps Engineer",
     bio: "Infrastructure specialist with expertise in cloud architecture, CI/CD pipelines, and automation. Geospatial Engineering background.",
-    image: "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=400"
+    image: charlophoto,
   }
 ];
 
