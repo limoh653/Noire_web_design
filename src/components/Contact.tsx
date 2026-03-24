@@ -9,16 +9,7 @@ export default function Contact() {
     message: ''
   });
 
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: '', email: '', projectType: '', message: '' });
-    }, 3000);
-  };
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -27,9 +18,38 @@ export default function Contact() {
     });
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
+
+    try {
+      const res = await fetch("https://noire-backend.onrender.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (res.ok) {
+        setStatus("success");
+        setFormData({ name: '', email: '', projectType: '', message: '' });
+
+        setTimeout(() => setStatus("idle"), 3000);
+      } else {
+        setStatus("error");
+      }
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
+    }
+  };
+
   return (
     <section id="contact" className="min-h-screen bg-black text-white py-20">
       <div className="max-w-7xl mx-auto px-6">
+
+        {/* HEADER */}
         <div className="text-center mb-16">
           <div className="inline-block px-4 py-1 bg-amber-500/10 border border-amber-500/20 rounded-full text-amber-500 text-sm font-medium mb-4">
             Let's Connect
@@ -43,162 +63,117 @@ export default function Contact() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-12">
-          <div>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-semibold text-gray-300 mb-2">
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-sm text-white focus:border-amber-500 focus:outline-none transition-colors"
-                  placeholder="John Smith"
-                />
-              </div>
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-semibold text-gray-300 mb-2">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-sm text-white focus:border-amber-500 focus:outline-none transition-colors"
-                  placeholder="john@company.com"
-                />
-              </div>
+          {/* FORM */}
+          <form onSubmit={handleSubmit} className="space-y-6">
 
-              <div>
-                <label htmlFor="projectType" className="block text-sm font-semibold text-gray-300 mb-2">
-                  Project Type
-                </label>
-                <select
-                  id="projectType"
-                  name="projectType"
-                  value={formData.projectType}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-sm text-white focus:border-amber-500 focus:outline-none transition-colors"
-                >
-                  <option value="">Select a project type</option>
-                  <option value="web-development">Web Development</option>
-                  <option value="ui-ux-design">UI/UX Design</option>
-                  <option value="automation">Workflow Automation</option>
-                  <option value="full-stack">Full-Stack Application</option>
-                  <option value="consultation">Consultation</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              placeholder="Your Name"
+              className="w-full px-4 py-3 bg-gray-900 border border-gray-800 text-white"
+            />
 
-              <div>
-                <label htmlFor="message" className="block text-sm font-semibold text-gray-300 mb-2">
-                  Tell Us About Your Vision
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={5}
-                  className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-sm text-white focus:border-amber-500 focus:outline-none transition-colors resize-none"
-                  placeholder="Describe your project goals, timeline, and any specific requirements..."
-                ></textarea>
-              </div>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              placeholder="Email Address"
+              className="w-full px-4 py-3 bg-gray-900 border border-gray-800 text-white"
+            />
 
-              <button
-                type="submit"
-                disabled={submitted}
-                className="w-full px-8 py-4 bg-amber-500 text-black font-semibold rounded-sm hover:bg-amber-400 transition-colors disabled:bg-green-500 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              >
-                {submitted ? (
-                  <>Message Sent Successfully!</>
-                ) : (
-                  <>
-                    Send Message
-                    <Send size={18} />
-                  </>
-                )}
-              </button>
-            </form>
-          </div>
+            <select
+              name="projectType"
+              value={formData.projectType}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 bg-gray-900 border border-gray-800 text-white"
+            >
+              <option value="">Select Project Type</option>
+              <option value="web-development">Web Development</option>
+              <option value="ui-ux-design">UI/UX Design</option>
+              <option value="automation">Automation</option>
+              <option value="full-stack">Full Stack</option>
+              <option value="consultation">Consultation</option>
+            </select>
 
+            <textarea
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              required
+              rows={5}
+              placeholder="Tell us about your project..."
+              className="w-full px-4 py-3 bg-gray-900 border border-gray-800 text-white"
+            />
+
+            <button
+              type="submit"
+              disabled={status === "loading"}
+              className="w-full px-6 py-4 bg-amber-500 text-black font-semibold flex justify-center items-center gap-2"
+            >
+              {status === "loading" && "Sending..."}
+              {status === "success" && "Message Sent ✅"}
+              {status === "error" && "Error ❌ Try Again"}
+              {status === "idle" && (
+                <>
+                  Send Message <Send size={18} />
+                </>
+              )}
+            </button>
+
+          </form>
+
+          {/* CONTACT + BOOKING */}
           <div className="space-y-8">
-            <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-sm p-8">
+
+            <div className="border border-gray-800 p-8">
               <h3 className="text-2xl font-bold mb-6">Other Ways to Connect</h3>
 
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-amber-500/10 rounded-sm flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-6 h-6 text-amber-500" />
-                  </div>
-                  <div>
-                    <div className="font-semibold mb-1">Email Us</div>
-                    <a href="mailto:hello@noireweb.design" className="text-gray-400 hover:text-amber-500 transition-colors">
-                      hello@noireweb.design
-                    </a>
-                  </div>
-                </div>
+              {/* EMAIL */}
+              <div className="flex gap-4 mb-6">
+                <Mail className="text-amber-500" />
+                <a href="mailto:limohesbon7@gmail.com" className="text-gray-400 hover:text-amber-500">
+                  limohesbon7@gmail.com
+                </a>
+              </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-amber-500/10 rounded-sm flex items-center justify-center flex-shrink-0">
-                    <Calendar className="w-6 h-6 text-amber-500" />
-                  </div>
-                  <div>
-                    <div className="font-semibold mb-1">Book a Consultation</div>
-                    <p className="text-gray-400 mb-2">Schedule a free 15-minute call to discuss your project</p>
-                    <button className="text-amber-500 hover:text-amber-400 transition-colors font-semibold">
-                      View Available Times →
-                    </button>
-                  </div>
-                </div>
+              {/* BOOKING */}
+              <div className="flex gap-4 mb-6">
+                <Calendar className="text-amber-500" />
+                <div>
+                  <p className="font-semibold">Book a Consultation</p>
+                  <p className="text-gray-400 text-sm mb-2">
+                    Choose a time that works for you
+                  </p>
 
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-amber-500/10 rounded-sm flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-6 h-6 text-amber-500" />
-                  </div>
-                  <div>
-                    <div className="font-semibold mb-1">Location</div>
-                    <p className="text-gray-400">
-                      Remote-first agency<br />
-                      Serving clients worldwide
-                    </p>
-                  </div>
+                  <a
+                    href="https://calendar.app.google/vTRCx4KbQUHuo6be6"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-amber-500 hover:text-amber-400 font-semibold"
+                  >
+                    View Available Times →
+                  </a>
                 </div>
+              </div>
+
+              {/* LOCATION */}
+              <div className="flex gap-4">
+                <MapPin className="text-amber-500" />
+                <p className="text-gray-400">
+                  Remote-first <br /> Worldwide
+                </p>
               </div>
             </div>
 
-            <div className="bg-gradient-to-r from-amber-500/10 to-transparent border border-amber-500/20 rounded-sm p-8">
-              <h4 className="text-xl font-bold mb-3">What Happens Next?</h4>
-              <ul className="space-y-3 text-gray-400">
-                <li className="flex items-start gap-3">
-                  <span className="text-amber-500 font-bold">1.</span>
-                  <span>We'll review your inquiry within 24 hours</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-amber-500 font-bold">2.</span>
-                  <span>Schedule a discovery call to discuss your vision</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-amber-500 font-bold">3.</span>
-                  <span>Receive a detailed proposal with timeline & pricing</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-amber-500 font-bold">4.</span>
-                  <span>Start building your dream project together</span>
-                </li>
-              </ul>
-            </div>
           </div>
+
         </div>
       </div>
     </section>

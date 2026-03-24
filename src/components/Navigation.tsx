@@ -44,12 +44,16 @@ export default function Navigation() {
             <button onClick={() => scrollToSection('portfolio')} className="text-gray-300 hover:text-white transition-colors">
               Portfolio
             </button>
+             <button onClick={() => scrollToSection('testimonials')} className="text-gray-300 hover:text-white transition-colors">
+              Testimonials
+            </button>
             <button onClick={() => scrollToSection('services')} className="text-gray-300 hover:text-white transition-colors">
               Services
             </button>
             <button onClick={() => scrollToSection('about')} className="text-gray-300 hover:text-white transition-colors">
               About
             </button>
+           
             <button
               onClick={() => scrollToSection('contact')}
               className="px-6 py-2 bg-amber-500 text-black font-semibold rounded-sm hover:bg-amber-400 transition-colors"
